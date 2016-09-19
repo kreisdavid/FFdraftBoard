@@ -35,138 +35,7 @@ class Button:
                     return True
         else:
             return False
-"""
-def eightTeamLeague(draftWindow,teamWindow):
-    clear = Rectangle(Point(0,0),Point(1300,650))
-    clear.draw(draftWindow)
-    clear.setFill('white')
-    #clears the previous selection screen
 
-
-    
-    rd1 = Text(Point(50,585),'Round 1')
-    rd1.setSize(13)
-    rd1.draw(draftWindow)
-    rd2 = Text(Point(50,516.667),'Round 2')
-    rd2.setSize(13)
-    rd2.draw(draftWindow)
-    rd3 = Text(Point(50,483.334),'Round 3')
-    rd3.setSize(13)
-    rd3.draw(draftWindow)
-    rd4 = Text(Point(50,450.001),'Round 4')
-    rd4.setSize(13)
-    rd4.draw(draftWindow)
-    rd5 = Text(Point(50,416.668),'Round 5')
-    rd5.setSize(13)
-    rd5.draw(draftWindow)
-    rd6 = Text(Point(50,383.335),'Round 6')
-    rd6.setSize(13)
-    rd6.draw(draftWindow)
-    rd7 = Text(Point(50,350.002),'Round 7')
-    rd7.setSize(13)
-    rd7.draw(draftWindow)
-    rd8 = Text(Point(50,316.669),'Round 8')
-    rd8.setSize(13)
-    rd8.draw(draftWindow)
-    rd9 = Text(Point(50,283.336),'Round 9')
-    rd9.setSize(13)
-    rd9.draw(draftWindow)
-    rd10 = Text(Point(50,250.003),'Round 10')
-    rd10.setSize(13)
-    rd10.draw(draftWindow)
-    rd11 = Text(Point(50,216.67),'Round 11')
-    rd11.setSize(13)
-    rd11.draw(draftWindow)
-    rd12 = Text(Point(50,183.337),'Round 12')
-    rd12.setSize(13)
-    rd12.draw(draftWindow)
-    rd13 = Text(Point(50,150.004),'Round 13')
-    rd13.setSize(13)
-    rd13.draw(draftWindow)
-    rd14 = Text(Point(50,116.671),'Round 14')
-    rd14.setSize(13)
-    rd14.draw(draftWindow)
-    rd15 = Text(Point(50,83.338),'Round 15')
-    rd15.setSize(13)
-    rd15.draw(draftWindow)
-    #finish rest of the rounds
-
-    for x in range(15):
-        line = Line(Point(175+(x*80.357),0), Point(175+(x*80.357),600))
-
-    
-
-    #button to submit team name
-    submit = Button(draftWindow,Point(800,25),75,22,'Submit','red')
-    submit.activate()
-
-    #the number of the team
-    tNum = 1
-
-    while tNum < 9:
-        
-        #text to prompt user to enter the team names
-        prompt = Text(Point(525,25),'Enter Team '+str(tNum))
-        prompt.setSize(14)
-        prompt.draw(draftWindow)
-        
-        #input window for entering the names
-        tNameInput = Entry(Point(675,25),15)
-        tNameInput.draw(draftWindow)
-        
-        c = draftWindow.getMouse()
-        while not submit.check(c):
-            c = draftWindow.getMouse()
-        if tNum == 1:
-            t1 = Text(Point(175,625),tNameInput.getText())
-            t1.setSize(15)
-            t1.draw(draftWindow)
-            
-        elif tNum == 2:
-            t2 = Text(Point(315.625,625),tNameInput.getText())
-            t2.setSize(15)
-            t2.draw(draftWindow)
-        elif tNum == 3:
-            t3 = Text(Point(456.25,625),tNameInput.getText())
-            t3.setSize(15)
-            t3.draw(draftWindow)
-        elif tNum == 4:
-            t4 = Text(Point(596.875,625),tNameInput.getText())
-            t4.setSize(15)
-            t4.draw(draftWindow)
-        elif tNum == 5:
-            t5 = Text(Point(737.5,625),tNameInput.getText())
-            t5.setSize(15)
-            t5.draw(draftWindow)
-        elif tNum == 6:
-            t6 = Text(Point(878.125,625),tNameInput.getText())
-            t6.setSize(15)
-            t6.draw(draftWindow)
-        elif tNum == 7:
-            t7 = Text(Point(1018.75,625),tNameInput.getText())
-            t7.setSize(15)
-            t7.draw(draftWindow)
-        elif tNum == 8:
-            t8 = Text(Point(1159.375,625),tNameInput.getText())
-            t8.setSize(15)
-            t8.draw(draftWindow)
-        prompt.undraw()
-        tNum += 1
-
-        if tNum == 9:
-            
-            coverUP = Rectangle(Point(300,5),Point(1300,100))
-            coverUP.setFill('white')
-            coverUP.draw(draftWindow)
-            
-    
-
-def tenTeamLeague(draftWindow,teamWindow):
-    pass
-
-def twelveTeamLeague(draftWindow,teamWindow):
-    pass
-"""
 def fourteenTeamLeague(draftWindow):
     clear = Rectangle(Point(0,0),Point(1300,650))
     clear.draw(draftWindow)
@@ -472,6 +341,45 @@ def main():
     #wnx = GraphWin("Teams by Positions",1300,650)
     #wnx.setCoords(0,0,1300,650)
 
+    parameterWindow = GraphWin("Draft Board", 500, 500)
+    parameterWindow.setCoords(0,0,500,500)
+    parameterWindow.setBackground('lightblue')
+
+    instructions = Text(Point(250, 375), "Enter league information:")
+    instructions.setSize(30)
+    instructions.draw(parameterWindow)
+    # fix formatting for parameter window, still looks funny
+    teamText = Text(Point(175, 250), "# Teams")
+    teamText.setSize(20)
+    teamText.draw(parameterWindow)
+
+    teamInput = Entry(Point(275, 250), 7)
+    teamInput.draw(parameterWindow)
+
+    roundsText = Text(Point(175, 200), "# Rounds")
+    roundsText.setSize(20)
+    roundsText.draw(parameterWindow)
+
+    roundInput = Entry(Point(275, 200), 7)
+    roundInput.draw(parameterWindow)
+
+    """
+    #button to submit team name
+    submit = Button(draftWindow,Point(800,25),75,22,'Submit','red')
+    submit.activate()
+
+    
+        #input window for entering the names
+        tNameInput = Entry(Point(675,25),15)
+        tNameInput.draw(draftWindow)
+        
+        c = draftWindow.getMouse()
+        while not submit.check(c):
+            c = draftWindow.getMouse()
+
+
+    """
+    
 
     wn = GraphWin("Fantasy Football Draft", 1300,650)
     wn.setCoords(0,0,1300,650)
@@ -495,7 +403,7 @@ def main():
 
     selected = False
     pt = wn.getMouse()
-    while not selected:
+    while not selected: # remember to change selected to true when selected
         if teams8.check(pt):
             pass
             #eightTeamLeague(wn,wnx)
