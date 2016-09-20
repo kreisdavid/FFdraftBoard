@@ -36,10 +36,13 @@ class Button:
         else:
             return False
 
-def fourteenTeamLeague(draftWindow):
-    clear = Rectangle(Point(0,0),Point(1300,650))
-    clear.draw(draftWindow)
-    clear.setFill('white')
+#=========================================================================
+
+def draftBoard(draftWindow, xwidth, yheight, numTeams, numRounds):
+    
+    #clear = Rectangle(Point(0,0),Point(1300,650))
+    #clear.draw(draftWindow)
+    #clear.setFill('white')
 
     """
     #lol, what am i doing
@@ -50,7 +53,17 @@ def fourteenTeamLeague(draftWindow):
     #clears the previous selection screen
     """
 
-    
+    #place round text
+    for rd in range(numRounds): #gives me range from 0 to round-1
+        roundText = Text(Point( (0.0385 * xwidth),
+                                ( (0.9 * yheight) - (rd *
+                                                     ( (0.7954 * yheight) /
+                                                       (numRounds - 1))))),
+                         'Round '+str(rd+1))
+        roundText.setSize(13)
+        roundText.draw(draftWindow)
+
+    """
     rd1 = Text(Point(50,585),'Round 1')
     rd1.setSize(13)
     rd1.draw(draftWindow)
@@ -96,6 +109,7 @@ def fourteenTeamLeague(draftWindow):
     rd15 = Text(Point(50,68.008),'Round 15')
     rd15.setSize(13)
     rd15.draw(draftWindow)
+    """
 
     """
     #agghh, so ineficient, but works for team window
@@ -146,6 +160,30 @@ def fourteenTeamLeague(draftWindow):
     rd15.draw(teamWindow)
     """
 
+    #vertical lines
+    for v in range(numTeams+1):
+        vertLine = Line( Point( ((0.104 * xwidth) + (v * ( (0.896 * xwidth) /
+                                                          numTeams))),
+                                (0.071 * yheight)),
+                         Point( ((0.104 * xwidth) + (v * ( (0.896 * xwidth) /
+                                                           numTeams))),
+                                yheight))
+        vertLine.draw(draftWindow)
+
+
+    #horizontal lines
+    for h in range(numRounds+1):
+        horizLine = Line( Point( 0,
+                                 ( (0.923 * yheight) -
+                                   (h * ( (0.7954 * yheight) /
+                                          (numRounds - 1))))),
+                          Point( xwidth,
+                                 ( (0.923 * yheight) -
+                                   (h * ( (0.7954 * yheight) /
+                                          (numRounds - 1))))))
+        horizLine.draw(draftWindow)
+
+    """
     for x in range(15):
         line = Line(Point(135+(x*80.357),46.08), Point(135+(x*80.357),650))
         line.draw(draftWindow)
@@ -157,11 +195,56 @@ def fourteenTeamLeague(draftWindow):
         #h = Line(Point(0,600-(y*36.928)), Point(1259.998,600-(y*36.928)))
         #h.draw(teamWindow)
         #so much shitty programming
-        
+    """      
 
+    #button to submit team name
+    submit = Button(draftWindow, Point( (0.6154 * xwidth),
+                                        (0.0385 * yheight)),
+                    (0.058 * xwidth),
+                    (0.034 * yheight),
+                    'Submit', 'red')
+    submit.activate()
+
+    """
     #button to submit team name
     submit = Button(draftWindow,Point(800,25),75,22,'Submit','red')
     submit.activate()
+    """
+
+    teamNum = 1 #The current team being labled
+
+    while teamNum < numTeams + 1:
+
+        #text to prompt user to enter the team names
+        prompt = Text( Point( (0.40385 * xwidth), (0.03846 * yheight)),
+                       'Enter Team '+str(teamNum))
+        prompt.setSize(14)
+        prompt.draw(draftWindow)
+
+        #input window for entering team names
+        teamNameInput = Entry( Point( (0.51923 * xwidth),
+                                      (0.03846 * yheight)), 15)
+        teamNameInput.draw(draftWindow)
+
+        #wait for submit button to be pressed
+        c = draftWindow.getMouse()
+        while not submit.check(c) or teamNameInput.getText() == "":
+            c = draftWindow.getMouse()
+
+        team = Text( Point( ((0.1346 * xwidth) +
+                             ((0.064 * xwidth) * (teamNum - 1))),
+                            (0.9615 * y height)),
+                     teamNameInput.getText())
+        team.setSize(12)
+        team.draw(draftWindow)
+
+        prompt.undraw()
+        teamNum += 1
+
+#good to this point -----------------------------------
+
+
+    """
 
     #the number of the team
     tNum = 1
@@ -283,7 +366,7 @@ def fourteenTeamLeague(draftWindow):
             
         prompt.undraw()
         tNum += 1
-
+    """
    
 
     prompt = Text(Point(425,25),"Enter Player Position and Name")
@@ -363,6 +446,7 @@ def main():
     roundInput = Entry(Point(275, 200), 7)
     roundInput.draw(parameterWindow)
 
+
     """
     #button to submit team name
     submit = Button(draftWindow,Point(800,25),75,22,'Submit','red')
@@ -377,15 +461,17 @@ def main():
         while not submit.check(c):
             c = draftWindow.getMouse()
 
+        pPosition = pInput.getText()
+        pName = tNameInput.getText()
 
     """
     
 
-    wn = GraphWin("Fantasy Football Draft", 1300,650)
-    wn.setCoords(0,0,1300,650)
-    wn.setBackground('lightblue')
+    wn = GraphWin("Fantasy Football Draft", 1300,650) #dimentions change based on other window
+    wn.setCoords(0,0,1300,650) #ditto 
     #creates window to fill screen
-    
+
+    """
     #buttons for different size league selection
     teams8 = Button(wn,Point(260,325),100,100,'8','orange')
     teams8.activate()
@@ -416,9 +502,11 @@ def main():
         elif teams14.check(pt):
             fourteenTeamLeague(wn) #add wnx if i ever decide to get that to work again
         pt = wn.getMouse()
+    """
 
+    draftBoard(wn, xwidth, yheight, numTeams, numRounds)
     
-
+    parameterWindow.close() #move elsewhere when finished with this window
     wn.close()
-    wnx.close()
+    #wnx.close()
 main()
